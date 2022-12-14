@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/06 14:20:38 by engo              #+#    #+#             */
-/*   Updated: 2021/06/06 14:20:39 by engo             ###   ########.fr       */
+/*   Created: 2022/12/14 14:35:10 by engo              #+#    #+#             */
+/*   Updated: 2022/12/14 17:32:46 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdio.h>
+#include "philo.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+int	main(int ac, char **av)
 {
-	size_t	i;
-	char	*dst_tmp;
-	char	*src_tmp;
-
-	dst_tmp = (char *)dst;
-	src_tmp = (char *)src;
-	i = 0;
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	while (i < n)
+	if (check_isalnum(av) == 1)
 	{
-		dst_tmp[i] = src_tmp[i];
-		i++;
+		write(2, "Error arguments. \n", 19);
+		return (1);
 	}
-	return (dst);
+	if (ac == 6 || ac == 5)
+	{
+		printf("fonctionne\n");
+	}
+	else
+	{
+		write(2, "Invalid number of arguments. \n", 31);
+		return (1);
+	}
+	return (0);
 }

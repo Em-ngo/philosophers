@@ -1,24 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/26 11:24:20 by engo              #+#    #+#             */
-/*   Updated: 2021/05/26 11:48:13 by engo             ###   ########.fr       */
+/*   Created: 2022/12/14 17:07:04 by engo              #+#    #+#             */
+/*   Updated: 2022/12/14 17:32:39 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-void	*ft_calloc(size_t count, size_t size)
+int	check_isalnum(char **str)
 {
-	void	*str;
+	int	i;
+	int	j;
 
-	str = malloc(size * count);
-	if (!str)
-		return (NULL);
-	ft_bzero(str, size * count);
-	return (str);
+	i = 1;
+	while (str[i])
+	{
+		j = 0;
+		while (str[i][j])
+		{
+			if (!(str[i][j] >= '0' && str[i][j] <= '9'))
+				return (1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }

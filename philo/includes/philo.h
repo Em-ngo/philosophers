@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/06 14:20:23 by engo              #+#    #+#             */
-/*   Updated: 2021/06/06 14:20:26 by engo             ###   ########.fr       */
+/*   Created: 2022/12/14 15:13:33 by engo              #+#    #+#             */
+/*   Updated: 2022/12/14 17:38:35 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PHILO_H
+# define PHILO_H
 
-void	*ft_memchr(const void *s, int c, size_t n)
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+
+typedef struct s_philo
 {
-	unsigned char	*s_tmp;
-	unsigned char	c_tmp;
-	size_t			i;
+	int	philo;
+	int	t_to_die;
+	int	t_to_eat;
+	int	t_to_sleep;
+	int	meal;
+}				t_philo;
 
-	s_tmp = (unsigned char *)s;
-	c_tmp = (unsigned char)c;
-	i = 0;
-	while (i < n)
-	{
-		if (s_tmp[i] == c_tmp)
-			return (&s_tmp[i]);
-		i++;
-	}
-	return (NULL);
-}
+int		check_isalnum(char **str);
+
+
+#endif

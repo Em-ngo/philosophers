@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:07:04 by engo              #+#    #+#             */
-/*   Updated: 2022/12/14 18:07:28 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/15 15:02:17 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,17 @@ void	init_struct(char **av, t_philo *philo)
 		philo->meal = ft_atoi(av[5]);
 }
 
-int	ft_atoi(const char *str)
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (*str)
+		i++;
+	return (i);
+}
+
+int	ft_atoi(char *str)
 {
 	int	nb;
 
@@ -34,18 +44,32 @@ int	ft_atoi(const char *str)
 	return (nb);
 }
 
-int	check_isalnum(char **str)
+int	check_intmax(int ac, char **av)
+{
+	int	i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (ft_atoi(av[i]) >= INT_MAX || (ft_strlen(av[i]) > 11))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_isalnum(int ac, char **av)
 {
 	int	i;
 	int	j;
 
 	i = 1;
-	while (str[i])
+	while (i < ac)
 	{
 		j = 0;
-		while (str[i][j])
+		while (av[i][j])
 		{
-			if (!(str[i][j] >= '0' && str[i][j] <= '9'))
+			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
 				return (1);
 			j++;
 		}

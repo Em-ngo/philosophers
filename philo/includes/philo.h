@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:13:33 by engo              #+#    #+#             */
-/*   Updated: 2022/12/14 18:07:41 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/15 14:54:00 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <limits.h>
+# include <pthread.h> 
 
 typedef struct s_philo
 {
@@ -27,8 +29,9 @@ typedef struct s_philo
 }				t_philo;
 
 void	init_struct(char **av, t_philo *philo);
-int		check_isalnum(char **str);
-int		ft_atoi(const char *str);
+int		check_isalnum(int ac, char **av);
+int		ft_atoi(char *str);
+int		check_intmax(int ac, char **av);
 
 
 #endif

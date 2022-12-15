@@ -7,7 +7,9 @@ NAME =	philo
 DIR_INC = -I ./includes/
 
 SRCS =		main.c \
-			utils.c \
+			parsing.c \
+			init_struct.c \
+			philo.c \
 		
 SRCS_DIR = ./srcs
 
@@ -22,7 +24,7 @@ DEPS = $(OBJS:.o=.d)
 all:	${NAME}
 
 ${NAME}: ${OBJS}
-		${CC} $(DIR_INC) ${OBJS} -o ${NAME} -L -lpthread
+		${CC} $(DIR_INC) ${OBJS} -o ${NAME} -L -pthread
 
 $(DIR_OBJ)/%.o: $(SRCS_DIR)/%.c
 	mkdir -p $(dir $@)

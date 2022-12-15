@@ -6,27 +6,37 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:35:10 by engo              #+#    #+#             */
-/*   Updated: 2022/12/15 14:59:58 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/15 19:45:30 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	*routine(void *tmp)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)tmp;
+	pthread_mutex_lock(&philo->write);
+	printf("philo created\n");
+	pthread_mutex_unlock(&philo->write);
+	sleep(2);
+	pthread_mutex_lock(&philo->write);
+	printf("philo died\n");
+	pthread_mutex_unlock(&philo->write);
+	return (tmp);
+}
+
 int	main(int ac, char **av)
 {
-	t_philo	philo;
+	t_philo			philo;
+	pthread_t		*t1;
 
-	if (check_isalnum(ac, av) == 1 || check_intmax(ac, av) == 1)
-	{
-		write(2, "Error arguments. \n", 19);
+	t1 = 0;
+	if (check_args(ac, av) == 1)
 		return (1);
-	}
-	printf("qqqqq\n");
-	init_struct(av, &philo);
-	if (ac == 6 || ac == 5)
-	{
-		printf("fonctionne\n");
-	}
+	else if (ac == 6 || ac == 5)
+		ft_exec(ac, av, philo, t1);
 	else
 	{
 		write(2, "Invalid number of arguments. \n", 31);

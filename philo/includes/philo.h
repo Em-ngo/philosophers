@@ -19,15 +19,19 @@
 # include <limits.h>
 # include <pthread.h> 
 
-typedef struct s_gen
+typedef struct s_data 
 {
-	int *fork;
-}				t_gen;
+	pthread_t		t;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	int				index;
+	int				t_he_eat;
+	int				state;
+	long			last_meal;
+}			t_data;
 
 typedef struct s_philo
 {
-	pthread_mutex_t	fork;
-	pthread_mutex_t	death;
 	pthread_mutex_t	write;
 	int				philo;
 	int				t_to_die;

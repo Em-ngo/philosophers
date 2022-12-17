@@ -6,11 +6,26 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:00:06 by engo              #+#    #+#             */
-/*   Updated: 2022/12/15 19:48:20 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/17 14:38:15 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*routine(void *tmp)
+{
+	t_data	*data;
+
+	philo = (t_philo *)tmp;
+	pthread_mutex_lock(&data->write);
+	printf("philo created\n");
+	pthread_mutex_unlock(&data->write);
+	sleep(2);
+	pthread_mutex_lock(&data->write);
+	printf("philo died\n");
+	pthread_mutex_unlock(&data->write);
+	return (tmp);
+}
 
 void	ft_exec(int ac, char **av, t_philo philo, pthread_t *t1)
 {

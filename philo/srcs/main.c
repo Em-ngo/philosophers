@@ -6,25 +6,18 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:35:10 by engo              #+#    #+#             */
-/*   Updated: 2022/12/15 19:45:30 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/17 14:19:34 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*routine(void *tmp)
+long	current_time(void)
 {
-	t_philo	*philo;
+	struct timeval	time;
 
-	philo = (t_philo *)tmp;
-	pthread_mutex_lock(&philo->write);
-	printf("philo created\n");
-	pthread_mutex_unlock(&philo->write);
-	sleep(2);
-	pthread_mutex_lock(&philo->write);
-	printf("philo died\n");
-	pthread_mutex_unlock(&philo->write);
-	return (tmp);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 int	main(int ac, char **av)

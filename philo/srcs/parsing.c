@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 17:07:04 by engo              #+#    #+#             */
-/*   Updated: 2022/12/15 18:53:27 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/22 16:33:38 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ size_t	ft_strlen(char *str)
 		i++;
 	return (i);
 }
-
 
 int	ft_atoi(char *str)
 {
@@ -56,6 +55,8 @@ int	check_isalnum(int ac, char **av)
 	int	j;
 
 	i = 1;
+	if (!(ac == 5 || ac == 6))
+		return (0);
 	while (i < ac)
 	{
 		j = 0;

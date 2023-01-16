@@ -6,44 +6,78 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 16:00:06 by engo              #+#    #+#             */
-/*   Updated: 2022/12/17 17:06:32 by engo             ###   ########.fr       */
+/*   Updated: 2022/12/21 14:51:40 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*routine(void *tmp)
+void	ft_lock_fork(t_data *data)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)tmp;
-	pthread_mutex_lock(&philo->write);
-	printf("philo created\n");
-	pthread_mutex_unlock(&philo->write);
-	sleep(2);
-	pthread_mutex_lock(&philo->write);
-	printf("philo died\n");
-	pthread_mutex_unlock(&philo->write);
-	return (tmp);
+	if (data->id == 1)
+	{
+		pthread_mutex_lock(\
+		&data->philo_ptr->fork[data->philo_ptr->nb_philo - 1]);
+		pthread_mutex_lock(&data->philo_ptr->fork[data->id - 1]);
+		display(data, LOCK_FORK);
+		display(data, LOCK_FORK);
+	}
+	else
+	{
+		pthread_mutex_lock(&data->philo_ptr->fork[data->id - 1]);
+		pthread_mutex_lock(&data->philo_ptr->fork[data->id - 2]);
+		display(data, LOCK_FORK);
+		display(data, LOCK_FORK);
+	}
 }
 
-void	ft_exec(int ac, char **av, t_philo philo, pthread_t *t1)
+void	ft_unlock_fork(t_data *data)
 {
-	int	nb_philo;
+	if (data->id == 1)
+	{
+		pthread_mutex_unlock(\
+		&data->philo_ptr->fork[data->philo_ptr->nb_philo - 1]);
+		pthread_mutex_unlock(&data->philo_ptr->fork[data->id - 1]);
+	}
+	else
+	{
+		pthread_mutex_unlock(&data->philo_ptr->fork[data->id - 1]);
+		pthread_mutex_unlock(&data->philo_ptr->fork[data->id - 2]);
+	}
+}
 
-	init_struct(ac, av, &philo);
-	nb_philo = ft_atoi(av[1]);
-	init_forks(&philo);
-	t1 = malloc(sizeof(t_philo) * nb_philo);
-	while (nb_philo > 0)
+int	max_meals(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_lock(&data->philo_ptr->check_max_eat);
+	if (data->philo_ptr->max_eat == -1)
 	{
-		pthread_create(&t1[nb_philo], NULL, &routine, &philo);
-		--nb_philo;
+		pthread_mutex_unlock(&data->philo_ptr->check_max_eat);
+		return (0);
 	}
-	while (nb_philo <= philo.n_philo)
+	while (i < data->philo_ptr->nb_philo)
 	{
-		pthread_join(t1[nb_philo], NULL);
-		++nb_philo;
+		if (data[i].nb_meal < data->philo_ptr->max_eat)
+		{
+			pthread_mutex_unlock(&data->philo_ptr->check_max_eat);
+			return (0);
+		}
+		i++;
 	}
-	free(t1);
+	pthread_mutex_unlock(&data->philo_ptr->check_max_eat);
+	return (1);
+}
+
+int	ft_check_death(t_data *data)
+{
+	pthread_mutex_lock(&data->philo_ptr->check_die);
+	if (!data->philo_ptr->die)
+	{
+		pthread_mutex_unlock(&data->philo_ptr->check_die);
+		return (0);
+	}
+	pthread_mutex_unlock(&data->philo_ptr->check_die);
+	return (1);
 }

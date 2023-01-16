@@ -8,8 +8,10 @@ DIR_INC = -I ./includes/
 
 SRCS =		main.c \
 			parsing.c \
-			init_struct.c \
+			init.c \
 			philo.c \
+			utils.c \
+			display.c \
 		
 SRCS_DIR = ./srcs
 

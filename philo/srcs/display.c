@@ -1,5 +1,6 @@
 #include "philo.h"
 
+<<<<<<< HEAD
 void	display(t_data *data, int str)
 {
 	pthread_mutex_lock(&data->philo_ptr->write);
@@ -81,3 +82,6 @@ void	ft_death(t_data *data, t_philo *philo)
 		}	
 	}
 }
+=======
+void    display(t_philo *philochar *msg)
+>>>>>>> 21642b23b12191e8daf7d110b2774531e41f9549

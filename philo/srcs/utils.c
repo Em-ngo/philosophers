@@ -12,32 +12,32 @@
 
 #include "philo.h"
 
-void	ft_usleep(t_data *data, long t2s)
+void	ft_usleep(t_philo *philo, long long tts)
 {
-	long	start_time;
+	long long	start_time;
 
 	start_time = current_time();
-	while (((current_time() - start_time) * 1000) < t2s
-		&& !ft_check_death(data) && !max_meals(data - (data->id - 1)))
+	while (((current_time() - start_time) * 1000) < tts
+		&& !ft_check_death(philo) && !max_meals(philo - (philo->id - 1)))
 		usleep(50);
 }
 
-void	ft_garbage(t_philo *philo)
+void	ft_garbage(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < philo->nb_philo)
+	while (i < data->nb_philo)
 	{
-		pthread_mutex_destroy(&philo->fork[i]);
+		pthread_mutex_destroy(&data->fork[i]);
 		i++;
 	}
 	i = 0;
-	free(philo->fork);
-	pthread_mutex_destroy(&philo->write);
-	pthread_mutex_destroy(&philo->check_die);
-	pthread_mutex_destroy(&philo->check_last_eat);
-	pthread_mutex_destroy(&philo->check_max_eat);
+	free(data->fork);
+	pthread_mutex_destroy(&data->write);
+	pthread_mutex_destroy(&data->check_max_eat);
+	pthread_mutex_destroy(&data->check_last_eat);
+	pthread_mutex_destroy(&data->check_die);
 }
 
 long	current_time(void)

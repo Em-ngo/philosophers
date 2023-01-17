@@ -24,29 +24,31 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_atoi(char *str)
+int	ft_atoi(const char *str)
 {
-	int	i;
-	int	nb;
-	int	sign;
+	size_t		i;
+	long long	r;
+	int			neg;
 
 	i = 0;
-	nb = 0;
-	sign = 1;
-	while (str[i] == ' ')
-		++i;
+	r = 0;
+	neg = 1;
+	while ((str[i] >= 9 && str[i] <= 13) || (str[i] == ' '))
+		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			sign = -1;
-		++i;
+			neg *= -1;
+		i++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		nb = nb * 10 + str[i] - '0';
-		++i;
+		if (r * neg > INT_MAX)
+			return (0);
+		r = r * 10 + (str[i] - 48);
+		i++;
 	}
-	return (nb * sign);
+	return (neg * r);
 }
 
 int	check_isalnum(int ac, char **av)

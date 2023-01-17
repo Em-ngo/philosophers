@@ -12,72 +12,72 @@
 
 #include "philo.h"
 
-void	ft_lock_fork(t_data *data)
+void	ft_lock_fork(t_philo *philo)
 {
-	if (data->id == 1)
+	if (philo->id == 1)
 	{
 		pthread_mutex_lock(\
-		&data->philo_ptr->fork[data->philo_ptr->nb_philo - 1]);
-		pthread_mutex_lock(&data->philo_ptr->fork[data->id - 1]);
-		display(data, LOCK_FORK);
-		display(data, LOCK_FORK);
+		&philo->data_ptr->fork[philo->data_ptr->nb_philo - 1]);
+		pthread_mutex_lock(&philo->data_ptr->fork[philo->id - 1]);
+		display(philo, LOCK_FORK);
+		display(philo, LOCK_FORK);
 	}
 	else
 	{
-		pthread_mutex_lock(&data->philo_ptr->fork[data->id - 1]);
-		pthread_mutex_lock(&data->philo_ptr->fork[data->id - 2]);
-		display(data, LOCK_FORK);
-		display(data, LOCK_FORK);
+		pthread_mutex_lock(&philo->data_ptr->fork[philo->id - 1]);
+		pthread_mutex_lock(&philo->data_ptr->fork[philo->id - 2]);
+		display(philo, LOCK_FORK);
+		display(philo, LOCK_FORK);
 	}
 }
 
-void	ft_unlock_fork(t_data *data)
+void	ft_unlock_fork(t_philo *philo)
 {
-	if (data->id == 1)
+	if (philo->id == 1)
 	{
 		pthread_mutex_unlock(\
-		&data->philo_ptr->fork[data->philo_ptr->nb_philo - 1]);
-		pthread_mutex_unlock(&data->philo_ptr->fork[data->id - 1]);
+		&philo->data_ptr->fork[philo->data_ptr->nb_philo - 1]);
+		pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 1]);
 	}
 	else
 	{
-		pthread_mutex_unlock(&data->philo_ptr->fork[data->id - 1]);
-		pthread_mutex_unlock(&data->philo_ptr->fork[data->id - 2]);
+		pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 1]);
+		pthread_mutex_unlock(&philo->data_ptr->fork[philo->id - 2]);
 	}
 }
 
-int	max_meals(t_data *data)
+t_bool	max_meals(t_philo *philo)
 {
 	int	i;
 
 	i = 0;
-	pthread_mutex_lock(&data->philo_ptr->check_max_eat);
-	if (data->philo_ptr->max_eat == -1)
+	pthread_mutex_lock(&philo->data_ptr->check_max_eat);
+	if (philo->data_ptr->max_eat == -1)
 	{
-		pthread_mutex_unlock(&data->philo_ptr->check_max_eat);
+		pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 		return (0);
 	}
-	while (i < data->philo_ptr->nb_philo)
+	while (i < philo->data_ptr->nb_philo)
 	{
-		if (data[i].nb_meal < data->philo_ptr->max_eat)
+		if (philo[i].nb_meal < philo->data_ptr->max_eat)
 		{
-			pthread_mutex_unlock(&data->philo_ptr->check_max_eat);
+			pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 			return (0);
 		}
 		i++;
 	}
-	pthread_mutex_unlock(&data->philo_ptr->check_max_eat);
+	pthread_mutex_unlock(&philo->data_ptr->check_max_eat);
 	return (1);
 }
 
-int	ft_check_death(t_data *data)
+t_bool	ft_check_death(t_philo *philo)
 {
-	pthread_mutex_lock(&data->philo_ptr->check_die);
-	if (!data->philo_ptr->die)
+	pthread_mutex_lock(&philo->data_ptr->check_die);
+	if (!philo->data_ptr->die)
 	{
-		pthread_mutex_unlock(&data->philo_ptr->check_die);
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
 		return (0);
 	}
-	pthread_mutex_unlock(&data->philo_ptr->check_die);
+	pthread_mutex_unlock(&philo->data_ptr->check_die);
 	return (1);
 }

@@ -6,65 +6,66 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:35:10 by engo              #+#    #+#             */
-/*   Updated: 2023/01/16 12:12:30 by engo             ###   ########.fr       */
+/*   Updated: 2023/01/17 15:12:51 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_eat_and_more(t_data *data)
+void	ft_eat_and_more(t_philo *philo)
 {
-	if (!ft_check_death(data) && !max_meals(data - (data->id - 1)))
-		ft_eat(data);
-	if (!ft_check_death(data) && !max_meals(data - (data->id - 1)))
-		ft_sleep(data, data->philo_ptr->t2s * 1000);
-	if (!ft_check_death(data) && !max_meals(data - (data->id - 1)))
-		ft_think(data);
+	if (!ft_check_death(philo) && !max_meals(philo - (philo->id - 1)))
+		ft_eat(philo);
+	if (!ft_check_death(philo) && !max_meals(philo - (philo->id - 1)))
+		ft_sleep(philo, philo->data_ptr->tts * 1000);
+	if (!ft_check_death(philo) && !max_meals(philo - (philo->id - 1)))
+		ft_think(philo);
 	usleep(500);
 }
 
-void	*ft_loop(t_data *data)
+void	*ft_loop(t_philo *philo)
 {
-	if (data->philo_ptr->nb_philo == 1)
+	if (philo->data_ptr->nb_philo == 1)
 	{
-		display(data, LOCK_FORK);
-		pthread_mutex_lock(&data->philo_ptr->check_die);
-		data->philo_ptr->die = 1;
-		pthread_mutex_unlock(&data->philo_ptr->check_die);
-		usleep(data->philo_ptr->t2d * 1000);
-		display(data, DIE);
+		display(philo, LOCK_FORK);
+		pthread_mutex_lock(&philo->data_ptr->check_die);
+		philo->data_ptr->die = 1;
+		pthread_mutex_unlock(&philo->data_ptr->check_die);
+		usleep(philo->data_ptr->ttd * 1000);
+		display(philo, DIE);
 		return (0);
 	}
-	if (data->philo_ptr->nb_philo % 2)
+	if (philo->data_ptr->nb_philo % 2)
 	{
-		if (data->id == data->philo_ptr->nb_philo)
-			ft_usleep(data, (data->philo_ptr->t2e * 1000) * 2);
-		else if (data->id % 2)
-			ft_usleep(data, data->philo_ptr->t2e * 1000);
+		if (philo->id == philo->data_ptr->nb_philo)
+			ft_usleep(philo, (philo->data_ptr->tte * 1000) * 2);
+		else if (philo->id % 2)
+			ft_usleep(philo, philo->data_ptr->tte * 1000);
 	}
-	else if (!(data->philo_ptr->nb_philo % 2) && (data->id % 2))
-		ft_usleep(data, data->philo_ptr->t2e * 1000);
-	while (!ft_check_death(data) && !max_meals(data - (data->id - 1)))
-		ft_eat_and_more(data);
+	else if (!(philo->data_ptr->nb_philo % 2) && (philo->id % 2))
+		ft_usleep(philo, philo->data_ptr->tte * 1000);
+	while (!ft_check_death(philo) && !max_meals(philo - (philo->id - 1)))
+		ft_eat_and_more(philo);
 	return (0);
 }
 
 int	main(int ac, char **av)
 {
-	t_philo			philo;
-	t_data			*data;
+	t_data		data;
+	t_philo		*philo;
 
 	if (check_args(ac, av) == 1)
 		return (0);
 	else if (ac == 6 || ac == 5)
 	{
-		if (init_struct(ac, av, &philo) == 1)
-			return (0);
-		data = init_philo_struct(&philo);
-		if (!data)
-			return (ft_garbage(&philo), 0);
-		if (init_thread(&philo, data))
-			return (0);
-		return (ft_garbage(&philo), free(data), 1);
+		if (!init_struct(ac, av, &data))
+			return (5);
+		philo = init_philo_struct(&data);
+		if (!philo)
+			return (ft_garbage(&data), 0);
+		int tesm = init_thread(&data, philo);
+		if (tesm)
+			return (tesm);
+		return (ft_garbage(&data), free(philo), 0);
 	}
 }

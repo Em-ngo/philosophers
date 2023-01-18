@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:13:33 by engo              #+#    #+#             */
-/*   Updated: 2022/12/22 16:34:08 by engo             ###   ########.fr       */
+/*   Updated: 2023/01/18 13:15:44 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 
 # define GREY "\033[37m"
 # define END "\033[0m"
-# define YELLOW "\033[93m"
+# define YELLOW "\033[94m"
 # define RED "\033[91m"
-# define GREEN "\033[0;32m"
-# define BLUE "\033[0;34m"
+# define GREEN "\033[0;36m"
+# define BLUE "\033[0;35m"
 
 # define SLEEP 1
 # define EAT 2

@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 15:58:17 by engo              #+#    #+#             */
-/*   Updated: 2023/01/17 15:19:53 by engo             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:49:42 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ t_bool	init_thread(t_data *data, t_philo *philo)
 			return (0);
 		i++;
 	}
-	ft_garbage(data);
-	free(philo);
-	return (40);
+	return (1);
 }
 
 t_philo	*init_philo_struct(t_data *data)
@@ -97,6 +95,8 @@ t_bool	init_struct(int ac, char **av, t_data *data)
 		if (data->max_eat <= -1)
 			return (0);
 	}
+	else
+		data->max_eat = -1;
 	data->fork = malloc(sizeof(pthread_mutex_t) * data->nb_philo);
 	if (!data->fork)
 		return (0);

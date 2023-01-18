@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 14:35:10 by engo              #+#    #+#             */
-/*   Updated: 2023/01/17 15:12:51 by engo             ###   ########.fr       */
+/*   Updated: 2023/01/17 16:55:12 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ int	main(int ac, char **av)
 	t_philo		*philo;
 
 	if (check_args(ac, av) == 1)
-		return (0);
+		return (1);
 	else if (ac == 6 || ac == 5)
 	{
 		if (!init_struct(ac, av, &data))
-			return (5);
+			return (1);
 		philo = init_philo_struct(&data);
 		if (!philo)
 			return (ft_garbage(&data), 0);
-		int tesm = init_thread(&data, philo);
-		if (tesm)
-			return (tesm);
-		return (ft_garbage(&data), free(philo), 0);
+		init_thread(&data, philo);
+		ft_garbage(&data);
+		free(philo);
+		return (0);
 	}
 }

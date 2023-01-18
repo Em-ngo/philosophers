@@ -26,7 +26,7 @@ DEPS = $(OBJS:.o=.d)
 all:	${NAME}
 
 ${NAME}: ${OBJS}
-		${CC} $(DIR_INC) ${OBJS} -o ${NAME} -L -pthread
+		${CC} $(DIR_INC) ${OBJS} -o ${NAME} -L -pthread -fsanitize=thread
 
 $(DIR_OBJ)/%.o: $(SRCS_DIR)/%.c
 	mkdir -p $(dir $@)

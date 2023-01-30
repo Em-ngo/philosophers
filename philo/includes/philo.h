@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 15:13:33 by engo              #+#    #+#             */
-/*   Updated: 2023/01/18 13:15:44 by engo             ###   ########.fr       */
+/*   Updated: 2023/01/20 11:22:42 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@
 # include <stdbool.h>
 
 # define GREY "\033[37m"
-# define END "\033[0m"
-# define YELLOW "\033[94m"
+# define BLUE "\033[94m"
 # define RED "\033[91m"
-# define GREEN "\033[0;36m"
-# define BLUE "\033[0;35m"
+# define CYAN "\033[0;36m"
+# define PURPLE "\033[0;35m"
 
 # define SLEEP 1
 # define EAT 2

@@ -1,3 +1,12 @@
+_NC=`tput sgr0`
+_RED=\033[0;31m
+_GREEN=\033[0;32m
+_YELLOW=\033[0;33m
+_BLUE=\033[0;34m
+_PURPLE=\033[0;95m
+_CYAN=\033[0;36m
+_WHITE=\033[0;37m
+
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror 
@@ -26,17 +35,20 @@ DEPS = $(OBJS:.o=.d)
 all:	${NAME}
 
 ${NAME}: ${OBJS}
-		${CC} $(DIR_INC) ${OBJS} -o ${NAME} -L -pthread -fsanitize=thread
+	@${CC} $(DIR_INC) ${OBJS} -o ${NAME} -L -pthread -fsanitize=thread
 
 $(DIR_OBJ)/%.o: $(SRCS_DIR)/%.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(DIR_INC) -o $@ -c $< -MMD -g
+	@mkdir -p $(dir $@)
+	@printf "$(_BLUE)Generating Philosophers obj... %-33.33s\r$(_NC)" $(notdir $@)
+	@$(CC) $(CFLAGS) $(DIR_INC) -o $@ -c $< -MMD -g 
 
 clean:
-		rm -rf ${DIR_OBJ}
+	@printf "$(_RED)Supressing Philosophers obj... %-33.33s\r$(_NC)" $(notdir $@)
+	@rm -rf ${DIR_OBJ}
 
 fclean: clean
-		rm -f ${NAME}
+	@printf "$(_RED)Supressing Philosophers obj... %-33.33s\r$(_NC)" $(notdir $@)
+	@rm -f ${NAME}
 
 re: fclean all
 

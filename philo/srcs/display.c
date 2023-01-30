@@ -6,7 +6,7 @@
 /*   By: engo <engo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 15:14:08 by engo              #+#    #+#             */
-/*   Updated: 2023/01/17 15:14:12 by engo             ###   ########.fr       */
+/*   Updated: 2023/01/30 15:04:15 by engo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	display(t_philo *philo, int msg)
 			printf(GREY "%ld - Philosophers %d is thinking\n", \
 			current_time() - philo->data_ptr->time, philo->id);
 		else if (msg == SLEEP)
-			printf(YELLOW "%ld - Philosophers %d is sleeping\n", \
+			printf(BLUE "%ld - Philosophers %d is sleeping\n", \
 			current_time() - philo->data_ptr->time, philo->id);
 		else if (msg == EAT)
-			printf(GREEN "%ld - Philosophers %d is eating\n", \
+			printf(CYAN "%ld - Philosophers %d is eating\n", \
 			current_time() - philo->data_ptr->time, philo->id);
 		else if (msg == LOCK_FORK)
-			printf(BLUE "%ld - Philosophers %d has taken a fork\n", \
+			printf(PURPLE "%ld - Philosophers %d has taken a fork\n", \
 			current_time() - philo->data_ptr->time, philo->id);
 	}
 	else if (msg == DIE && !max_meals(philo - (philo->id - 1)))
@@ -40,6 +40,8 @@ void	ft_think(t_philo *philo)
 {
 	if (!ft_check_death(philo))
 		display(philo, THINK);
+	usleep(((philo->data_ptr->ttd - (philo->data_ptr->tte \
+	+ philo->data_ptr->tts)) / 2) * 1000);
 }
 
 void	ft_sleep(t_philo *philo, long long tts)
